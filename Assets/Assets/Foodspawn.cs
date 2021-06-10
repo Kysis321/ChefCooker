@@ -9,12 +9,12 @@ public class Foodspawn : MonoBehaviour
     public float spawnInterval = 5f;
     public bool spawnerisActive = true;
     public Collider2D below;
-
-    private float nextSpawnTime;
+    public bool hasEntered = false;
+    //private float nextSpawnTime;
 
     public void Awake()
     {
-        nextSpawnTime = Time.time + spawnInterval;
+       // nextSpawnTime = Time.time + spawnInterval;
     }
 
     // Start is called before the first frame update
@@ -29,10 +29,19 @@ public class Foodspawn : MonoBehaviour
  
     }
 
-    private void OntriggerEnter2D(Collider2D below)
+    private void OnTriggerEnter2D(Collider2D below)
     {
-        Debug.Log("Charachter Entered Trigger zone");
-        GameObject NewObject = (GameObject)Instantiate(FoodItem, spawnLocation.position, transform.rotation);
+       Debug.Log("Charachter Entered Trigger zone");
+        if(hasEntered == false)
+        {
+            GameObject NewObject = (GameObject)Instantiate(FoodItem, spawnLocation.position, transform.rotation);
+            hasEntered = true;
+        }
+       
+    }
+    private void OnTriggerExit2D(Collider2D below)
+    {
+        hasEntered = false;
     }
 
 
