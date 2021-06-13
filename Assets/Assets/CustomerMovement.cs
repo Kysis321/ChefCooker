@@ -4,24 +4,34 @@ using UnityEngine;
 
 public class CustomerMovement : MonoBehaviour
 {
-    
-    public float speed = 5;
-    private Rigidbody2D rb;
-    private Vector2 CounterPosition = new Vector2(5, -3);
+    private float speed = 2f;
+    public GameObject Customer;
+    public GameObject LineUp;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(transform.position > CounterPosition)
+        transform.Translate(Vector2.left * speed * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "LineUp")
         {
-            transform.position = Vector2.MoveTowards(transform.position, CounterPosition, speed * Time.deltaTime); 
+            speed = 0;
         }
     }
 
-
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "LineUp")
+        {
+            speed = 0;
+        }
+    }
 }
